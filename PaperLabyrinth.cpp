@@ -13,7 +13,7 @@ using namespace std;
  
 int main()
 {
-    int * pos;
+    //int * pos;
     int xs;
     int ys;
     cin >> xs >> ys; cin.ignore();
@@ -24,7 +24,11 @@ int main()
     int h;
     cin >> w >> h; cin.ignore();
     //int lab[h][w];
-    vector< vector<int> > lab;
+    struct casilla{
+        int valor;
+        bool acceso = 1;
+    };
+    vector< vector<casilla> > lab;
     lab.resize(h);
     
     for (int i = 0; i < h; i++) {
@@ -34,31 +38,59 @@ int main()
         lab[i].resize(w);
         for(int j = 0; j < l.length(); j++){
             if(l[j] == 'a'){
-                lab[i][j] = 10;
+                lab[i][j].valor = 10;
             }
             else if(l[j] == 'b'){
-                lab[i][j] = 11;
+                lab[i][j].valor = 11;
             }
             else if(l[j] == 'c'){
-                lab[i][j] = 12;
+                lab[i][j].valor = 12;
             }
             else if(l[j] == 'd'){
-                lab[i][j] = 13;
+                lab[i][j].valor = 13;
             }
             else{
-                lab[i][j] = int(l[j])-48;
+                lab[i][j].valor = int(l[j])-48;
             }
         }
     }
     
-    auto calc_dist = [&lab,](int dist) -> int {
-        
-        return lab[0][0]+dist;
+    function<string()> respuesta = [&lab]() -> string {
+        int distancia = -1;
+        function<int(int)> calc_dist = [&lab](int posX, int posY, int dist) -> int {
+            int val = lab[posX][posY];
+            bool fin = 1;
+            lab[posX][posY].acceso=0;
+            if(val<8 && lab[posX][posY+1].acceso==1){
+                calc_dist(posX, posY+1,dist+1);
+                fin = 0;
+            }
+            if(val-8<4 && lab[posX+1][posY].acceso==1){
+                calc_dist(posX+1, posY,dist+1);
+                fin = 0;
+            }
+            if(val-12<2 && lab[posX][posY-1].acceso==1){
+                calc_dist(posX, posY-1,dist+1);
+                fin = 0;
+            }
+            if(val-14<1 && lab[posX-1][posY].acceso==1){
+                calc_dist(posX-1, posY,dist+1);
+                fin = 0;
+            }
+            
+            if(fin==1){
+            }
+            else{
+            }
+            
+            return 0;
+        };
+        return "none";
     };
     
 
     // Write an action using cout. DON'T FORGET THE "<< endl"
     // To debug: cerr << "Debug messages..." << endl;
 
-    cout << calc_dist(0) << endl;
+    cout << respuesta() << endl;
 }
