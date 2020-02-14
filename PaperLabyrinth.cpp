@@ -13,7 +13,6 @@ using namespace std;
  
 int main()
 {
-    //int * pos;
     int xs;
     int ys;
     cin >> xs >> ys; cin.ignore();
@@ -23,7 +22,6 @@ int main()
     int w;
     int h;
     cin >> w >> h; cin.ignore();
-    //int lab[h][w];
     struct casilla{
         int valor;
         bool acceso = 1;
@@ -34,7 +32,6 @@ int main()
     for (int i = 0; i < h; i++) {
         string l;
         cin >> l; cin.ignore();
-        //cout<<l[0]<<endl;
         lab[i].resize(w);
         for(int j = 0; j < l.length(); j++){
             if(l[j] == 'a'){
@@ -60,17 +57,21 @@ int main()
             }
         }
     }
-    //function<void()> respuesta = [&lab,&xs,&ys,&xr,&yr]() -> void {
         int distancia = -1;
-        //function<int(int,int,int,int,int)> calc_dist; 
-        auto calc_dist = [&distancia](int posX, int posY, int dist, int finX, int finY, auto& calc_dist, auto* lab) -> int {
+        auto calc_dist = [&distancia](int posX, int posY, int dist, int finX, int finY, auto& calc_dist, auto* lab) -> void {
+            if(posX == finX && posY == finY){
+                if(dist < distancia || distancia == -1){
+                    distancia = dist;
+                    return;
+                }
+            }
             int val = (*lab)[posX][posY].valor;
             bool fin = 1;
             (*lab)[posX][posY].acceso=0;
             if(posX != finX || posY != finY){
                 if(val<8){
                     if((*lab)[posX][posY+1].acceso==1){
-                        distancia = calc_dist(posX, posY+1,dist+1,finX,finY,calc_dist,lab);
+                        calc_dist(posX, posY+1,dist+1,finX,finY,calc_dist,lab);
                         fin = 0;
                     }
                 }
@@ -79,7 +80,7 @@ int main()
                 }
                 if(val<4){
                     if((*lab)[posX-1][posY].acceso==1){
-                        distancia = calc_dist(posX-1, posY,dist+1,finX,finY,calc_dist,lab);
+                        calc_dist(posX-1, posY,dist+1,finX,finY,calc_dist,lab);
                         fin = 0;
                     }
                 }
@@ -88,7 +89,7 @@ int main()
                 }
                 if(val<2){
                     if((*lab)[posX][posY-1].acceso==1){
-                        distancia = calc_dist(posX, posY-1,dist+1,finX,finY,calc_dist,lab);
+                        calc_dist(posX, posY-1,dist+1,finX,finY,calc_dist,lab);
                         fin = 0;
                     }
                 }
@@ -97,7 +98,7 @@ int main()
                 }
                 if(val<1){
                     if((*lab)[posX+1][posY].acceso==1){
-                        distancia = calc_dist(posX+1, posY,dist+1,finX,finY,calc_dist,lab);
+                        calc_dist(posX+1, posY,dist+1,finX,finY,calc_dist,lab);
                         fin = 0;
                     }
                 }
@@ -105,19 +106,13 @@ int main()
             
             (*lab)[posX][posY].acceso=1;
             
-            if(fin==1 && posX == finX && posY == finY){
-                if(dist < distancia || distancia == -1){
-                    return dist;
-                }
-                else{
-                    return distancia;
-                }
-            }
-            return distancia;
+            
         };
-        int dist1 = calc_dist(ys,xs,0,yr,xr,calc_dist,&lab);
+        calc_dist(ys,xs,0,yr,xr,calc_dist,&lab);
+        int dist1 = distancia ;
         distancia = -1;
-        int dist2 = calc_dist(yr,xr,0,ys,xs,calc_dist,&lab);
+        calc_dist(yr,xr,0,ys,xs,calc_dist,&lab);
+        int dist2 = distancia;
         cout << dist1 << " " << dist2 << endl;
     //};
     
