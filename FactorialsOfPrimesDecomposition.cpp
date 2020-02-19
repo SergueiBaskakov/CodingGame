@@ -35,9 +35,7 @@ struct Numero{
 
 void descomponer(int numero, list<Numero>& l, int cant){
     int t = numero/2;
-    //bool prim = true;
     for(list<Numero> :: iterator it = l.begin(); it != l.end(); it++){
-        //if((*it).num>t){break;}
         if(numero%(*it).num==0){
             int temp = numero;
             while(temp%(*it).num==0){
@@ -45,14 +43,17 @@ void descomponer(int numero, list<Numero>& l, int cant){
                 (*it).n = (*it).n + cant;
             }
         }
-        /*else{
-            prim = false;
-        }*/
     }
 }
 
 list<Numero> listaPrimos(int numerador, int denominador){
-    int t = int(max(numerador,denominador)/2);
+    int t;
+    if(primo(max(numerador,denominador))){
+        t = max(numerador,denominador);
+    }
+    else{
+        t = int(max(numerador,denominador)/2);
+    }
     list<Numero> l;
     for (int i = 2; i <= t; i++){
             if(primo(i)){
@@ -79,6 +80,7 @@ list<Numero> listaPrimos(int numerador, int denominador){
                 l.push_back(temp);
             }
     }
+    
     return l;
 }
 
@@ -90,22 +92,13 @@ string calcular(list<Numero>& l){
             sol.append("#");
             sol.append(to_string((*it).n));
             sol.append(" ");
-            //if((*it).num>2){
-                //list<Numero> :: reverse_iterator itemp = it;
-                //itemp++;
-                for(int i = (*it).num; i > 1; i--){
-                    int neg = -((*it).n);
+                int neg = -((*it).n);
+                for(int i = (*it).num; i > 1; i--){ 
                     descomponer(i,l,neg);
                 }
-            //}
-            //else{
-                //for(int i = (*it).num-1; i > 1; i--){
-                    //int neg = -((*it).n);
-                    //descomponer(i,l,neg);
-                //}
-            //}
         }
     }
+    sol.pop_back();
     return sol;
 }
  
@@ -131,10 +124,6 @@ int main(){
     // Write an action using cout. DON'T FORGET THE "<< endl"
     // To debug: cerr << "Debug messages..." << endl;
     list<Numero> l = listaPrimos(num, den);
-    
-    descomponer(9,l,2);
-    cout << l.back().n << endl;
-    cout << l.front().n << endl;
     string res = calcular(l);
     cout << res << endl;
 }
