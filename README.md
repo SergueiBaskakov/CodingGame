@@ -1,4 +1,4 @@
-# CodingGame
+## CodingGame
 
 ### [Paper Labyrinth Statement](https://www.codingame.com/training/medium/paper-labyrinth)
 You are Alice and you must find the rabbit then go out of the Queen’s labyrinth of death as quickly as you can.
