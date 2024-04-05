@@ -7,7 +7,9 @@ This also means that one-way doors are not forbidden. Look for instance at 10 5,
 In fact, the cells are coded in hexadecimal, 10 is a.
 The first simple labyrinth is this one:
  ________ 
+ 
  |S    R| 
+ 
  ‾‾‾‾‾‾‾‾ 
 7=4+2+1, it’s the start cell on the left, 0xd=13=8+4+1, it’s the rabbit cell on the right. The other cells are 5=4+1.
 
