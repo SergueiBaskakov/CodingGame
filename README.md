@@ -6,11 +6,13 @@ The labyrinth is made of thin walls, each wall is binary-coded in each cell: 1 i
 This also means that one-way doors are not forbidden. Look for instance at 10 5, if you are on 5, you can go on 10 but you can’t go back.
 In fact, the cells are coded in hexadecimal, 10 is a.
 The first simple labyrinth is this one:
- ________ 
  
- |S    R| 
+ ‾‾‾‾‾
  
- ‾‾‾‾‾‾‾‾ 
+ |S R|
+ 
+ ‾‾‾‾‾
+
 7=4+2+1, it’s the start cell on the left, 0xd=13=8+4+1, it’s the rabbit cell on the right. The other cells are 5=4+1.
 
 ### [Factorials Of Prime Descomposition](https://www.codingame.com/training/hard/factorials-of-primes-decomposition)
